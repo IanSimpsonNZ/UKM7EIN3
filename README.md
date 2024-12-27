@@ -2,6 +2,8 @@ UKM7EIN3 is a terminal and file transfer program for the Tatung Einstein. It is 
 When connected to tcpser on a Raspberry Pi it can run reliably at up to 4800 baud - I could only manage 300 baud without flow control.
 So far I have only added flow control to the terminal mode - making the file transfer features essentially useless.
 
+If you are thinking about using this, please be aware that I have very little idea what I am doing, and it is almost certainly broken in many ways.
+
 From the source code ...
 > UKM7(EIN2 replaces UKM7EIN1.COM/HEX/ZSM/DOC)
 > This program was originally written in 1977 by Ward Christensen.
