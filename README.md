@@ -50,4 +50,19 @@ Initial tips for UKM7EIN3 are :-
 * Remember to use 'O' to enter "online mode" before using the 'T'erminal
 * When online, Ctrl-E will return to the command prompt and Ctrl-D will give you the "Terminal menu"
 
+My start_tcpser.sh file looks like this ...
+```
+#!/bin/bash
+
+phonebook="/home/ian/phonebook.txt"
+baud='4800'
+dev='/dev/ttyUSB0'
+
+for i in `cat $phonebook`; do
+        n="$n -n$i "
+done
+
+/usr/local/bin/tcpser -l4 -s ${baud} -d ${dev} $n -i"K3&C0"
+```
+
 Happy BBSing.
