@@ -641,50 +641,53 @@ TERML: CALL INMODCTLP
  CALL INMODDATP
  AND 7FH ;strip parity
  JP Z,TERM ;ignore null
- CP ENQ ;auto logon
- JP NZ,NOLOG
- LD A,(ANSBAK)
- OR A
- JP Z,TERM
- LD DE,LOGMSSG
-NXCHAR: LD A,(DE)
- INC DE
- OR A
- JP Z,TERM
- CALL CHRSND ;send to remote
- LD B,A
- LD A,(ECHOFLG)
- OR A
- LD A,B
- JP NZ,CHRSAV
- PUSH DE
- LD D,0 ;init count
- CALL INMODEM ;wait 100ms for echo
- AND 7FH
- DEC D
- POP DE
- JP NZ,NXCHAR
-CHRSAV: CALL CTYPE
- CALL MSAVE
- JP NXCHAR
-NOLOG: CP SAVON ;auto filesave on
- JP NZ,TRYT
- LD A,(SAVEFLG)
- OR A
- JP NZ,TERM ;save already on
- LD A,TRUE
- LD (SAVEFLG),A ;turn on save
- LD (CTRLR),A ;remember
- JP TERM3
-TRYT: CP SAVOFF ;auto save off
- JP NZ,ONWRD
- LD A,(CTRLR)
- OR A
- JP Z,TERM ;turn save off only
- LD A,FALSE ;if it was turned on
- LD (SAVEFLG),A ;by ^R from remote
- LD (CTRLR),A
- JP TERM
+;
+; We might use something like this later for Term ID or even ANSI codes?
+;
+; CP ENQ ;auto logon
+; JP NZ,NOLOG
+; LD A,(ANSBAK)
+; OR A
+; JP Z,TERM
+; LD DE,LOGMSSG
+;NXCHAR: LD A,(DE)
+; INC DE
+; OR A
+; JP Z,TERM
+; CALL CHRSND ;send to remote
+; LD B,A
+; LD A,(ECHOFLG)
+; OR A
+; LD A,B
+; JP NZ,CHRSAV
+; PUSH DE
+; LD D,0 ;init count
+; CALL INMODEM ;wait 100ms for echo
+; AND 7FH
+; DEC D
+; POP DE
+; JP NZ,NXCHAR
+;CHRSAV: CALL CTYPE
+; CALL MSAVE
+; JP NXCHAR
+;NOLOG: CP SAVON ;auto filesave on
+; JP NZ,TRYT
+; LD A,(SAVEFLG)
+; OR A
+; JP NZ,TERM ;save already on
+; LD A,TRUE
+; LD (SAVEFLG),A ;turn on save
+; LD (CTRLR),A ;remember
+; JP TERM3
+;TRYT: CP SAVOFF ;auto save off
+; JP NZ,ONWRD
+; LD A,(CTRLR)
+; OR A
+; JP Z,TERM ;turn save off only
+; LD A,FALSE ;if it was turned on
+; LD (SAVEFLG),A ;by ^R from remote
+; LD (CTRLR),A
+; JP TERM
 ONWRD: LD B,A
  LD A,(ECHOFLG)
  OR A
@@ -696,11 +699,11 @@ ONWRD: LD B,A
  CP CR
  JP NZ,TERM5
  CALL CTYPE
- CALL MSAVE ;save in terminal file
+ ; CALL MSAVE ;save in terminal file *** Put this back for *real* UkM7EIN3
  LD A,LF
  CALL CHRSND ;send LF
 TERM5: CALL CTYPE
- CALL MSAVE ;save in terminal file
+; CALL MSAVE ;save in terminal file *** Put this back for *real* UkM7EIN3
  JP TERM
 CTRLR: DEFB FALSE
 LASTB1: DEFB 0
