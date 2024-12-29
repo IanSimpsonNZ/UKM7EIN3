@@ -642,6 +642,9 @@ TERML: CALL INMODCTLP
  AND 7FH ;strip parity
  JP Z,TERM ;ignore null
 ;
+ CP 01H ; Don't try and print the "Screen Dump" character
+ JP Z,TERM
+;
 ; We might use something like this later for Term ID or even ANSI codes?
 ;
 ; CP ENQ ;auto logon
